@@ -1,7 +1,6 @@
 import json
 import textwrap
 from pprint import pprint
-from typing import Any
 
 from openai.types.chat import ChatCompletion
 
