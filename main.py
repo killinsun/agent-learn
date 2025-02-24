@@ -5,6 +5,11 @@ from chat_history.conversation import LocalConversationHistory
 from search_engine.open_search import get_opensearch_client, FullTextSearchRetriever
 from tools.ask_user import AskUserTool
 from tools.search_docs import SearchDocsTool
+from tools.user_defined import (
+    get_available_tickets,
+    book_ticket_tool,
+    get_available_tickets_tool,
+)
 from use_cases.index_docs import IndexDocsUseCase
 
 
@@ -53,6 +58,8 @@ def chat():
                 retriever=fts_retriever,
             ),
             AskUserTool(),
+            get_available_tickets_tool,
+            book_ticket_tool,
         ],
         conversation_repo=LocalConversationHistory(conversation_id=conversation_id),
     )
