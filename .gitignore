@@ -2,3 +2,4 @@
 .env
 .idea
 chat_history/*.json
+index_name.txt

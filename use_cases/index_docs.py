@@ -30,6 +30,9 @@ class IndexDocsUseCase:
 
         full_path = os.path.join(project_dir, file_path)
 
+        if not os.path.exists(full_path):
+            raise FileNotFoundError(f"File not found: {full_path}")
+
         with open(full_path, "r") as f:
             docs = json.load(f)
 
