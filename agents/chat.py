@@ -18,16 +18,17 @@ class ChatAgent:
     ):
         self.tools = tools
         tool_definitions = [tool.definition for tool in tools]
+        tool_names = [tool.definition["function"]["name"] for tool in tools]
         self.llm = OpenAILLM(model_name="gpt-4o", tools=tool_definitions)
 
         self.repo = conversation_repo
 
         self.system_prompt = textwrap.dedent(
-            """
+            f"""
         あなたはホテル＆テーマパークのアシスタントエージェントです。
         ユーザーの質問に対し、ホテルやテーマパークのことについて回答します。
         
-        回答するために必要な情報があればユーザーに質問するためのツールを使用し、そこから不足情報を補って回答します。
+        回答するために必要な情報があればユーザーに質問するためのツール「{tool_names}」を使用し、そこから不足情報を補って回答します。
         必要な情報が出揃い、最終回答する時はツールは使用せずに出力します。
         会話を続ける場合は得られた情報をベースに回答していきます。
         
