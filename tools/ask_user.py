@@ -1,3 +1,5 @@
+import textwrap
+
 from tools.base_tool import BaseTool
 
 
@@ -29,7 +31,10 @@ class AskUserTool(BaseTool):
         options = kwargs.get("options", [])
 
         print(
-            f"エージェントはAskUserTool を選択しました。 質問: {question}, options: {options}"
+            textwrap.dedent(
+                f"""エージェントはAskUserTool を選択しました。
+                    質問: {question}, options: {options}"""
+            )
         )
 
         if len(options) >= 1:

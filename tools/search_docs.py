@@ -1,3 +1,4 @@
+import textwrap
 from pprint import pprint
 
 from search_engine.open_search import FullTextSearchRetriever
@@ -36,7 +37,11 @@ class SearchDocsTool(BaseTool):
         top_k = kwargs.get("top_k", 5)
 
         print(
-            f"エージェントはSearchDocsTool を選択しました。 検索キーワード: {query}, top_k: {top_k}"
+            textwrap.dedent(
+                f"""
+                エージェントはSearchDocsTool を選択しました。 
+                検索キーワード: {query}, top_k: {top_k}"""
+            )
         )
 
         got = self.retriever.search(query, top_k)
