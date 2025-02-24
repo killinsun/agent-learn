@@ -1,0 +1,4 @@
+.venv
+.env
+.idea
+chat_history/*.json
