@@ -9,5 +9,6 @@ dependencies = [
     "dotenv>=0.9.9",
     "litellm>=1.61.15",
     "openai>=1.64.0",
+    "opensearch-py>=2.8.0",
     "pydantic>=2.10.6",
 ]

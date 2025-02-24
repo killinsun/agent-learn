@@ -28,7 +28,9 @@ class AskUserTool(BaseTool):
         question = kwargs.get("question")
         options = kwargs.get("options", [])
 
-        print(question)
+        print(
+            f"エージェントはAskUserTool を選択しました。 質問: {question}, options: {options}"
+        )
 
         if len(options) >= 1:
             for index, option in enumerate(options):

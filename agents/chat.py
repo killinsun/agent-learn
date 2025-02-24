@@ -58,7 +58,7 @@ class ChatAgent:
         if self._has_tool_call(result):
             self._call_tool(result)
         else:
-            pprint(result.choices[0].message.content)
+            print(result.choices[0].message.content)
 
         self.repo.save(self.messages)
 

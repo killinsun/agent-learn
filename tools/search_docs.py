@@ -1,7 +1,12 @@
+from pprint import pprint
+
+from search_engine.open_search import FullTextSearchRetriever
 from tools.base_tool import BaseTool
 
 
 class SearchDocsTool(BaseTool):
+    retriever: FullTextSearchRetriever
+
     definition = {
         "type": "function",
         "function": {
@@ -23,9 +28,23 @@ class SearchDocsTool(BaseTool):
         },
     }
 
+    def __init__(self, retriever: FullTextSearchRetriever):
+        self.retriever = retriever
+
     def call(self, **kwargs):
         query = kwargs.get("query")
         top_k = kwargs.get("top_k", 5)
 
-        print(f"Search docs for {query} with top_k={top_k}")
-        return f"Search docs for {query} with top_k={top_k}"
+        print(
+            f"エージェントはSearchDocsTool を選択しました。 検索キーワード: {query}, top_k: {top_k}"
+        )
+
+        got = self.retriever.search(query, top_k)
+
+        print(f"{len(got)} 件の検索結果が見つかりました")
+
+        search_result = ""
+        for hit in got["hits"]["hits"]:
+            search_result += f"{hit['_source']['document']}\n"
+
+        return search_result
