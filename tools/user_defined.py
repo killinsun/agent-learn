@@ -24,7 +24,28 @@ class UserDefinedTool(BaseTool):
 
 
 def get_available_tickets() -> str:
-    available_tickets = ["キッズ", "ネイビー", "ゴールド", "バーガンディー"]
+    available_tickets = [
+        {
+            "ticket_name": "ネイビー",
+            "price": 1000,
+            "quantity": 10,
+        },
+        {
+            "ticket_name": "キッズ",
+            "price": 500,
+            "quantity": 1,
+        },
+        {
+            "ticket_name": "ゴールド",
+            "price": 10000,
+            "quantity": 100,
+        },
+        {
+            "ticket_name": "バーガンディー",
+            "price": 3000,
+            "quantity": 5,
+        },
+    ]
 
     print(
         textwrap.dedent(
@@ -33,7 +54,7 @@ def get_available_tickets() -> str:
     利用可能なチケットを取得します。
     
     以下のチケットが利用可能です:
-    f{available_tickets}
+    {available_tickets}
     
     """
         )
@@ -56,6 +77,37 @@ def book_ticket(ticket_type: str, quantity: int) -> str:
     """
         )
     )
+
+    available_tickets = [
+        {
+            "ticket_name": "ネイビー",
+            "price": 1000,
+            "quantity": 10,
+        },
+        {
+            "ticket_name": "キッズ",
+            "price": 500,
+            "quantity": 1,
+        },
+        {
+            "ticket_name": "ゴールド",
+            "price": 10000,
+            "quantity": 100,
+        },
+        {
+            "ticket_name": "バーガンディー",
+            "price": 3000,
+            "quantity": 5,
+        },
+    ]
+
+    for ticket in available_tickets:
+        if ticket["ticket_name"] == ticket_type:
+            if ticket["quantity"] < quantity:
+                return f"{ticket_type} の在庫が足りません"
+            else:
+                ticket["quantity"] -= quantity
+                break
 
     return f"{quantity}枚の{ticket_type}を予約しました"
 
