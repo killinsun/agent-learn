@@ -31,6 +31,9 @@ class ChatAgent:
         必要な情報が出揃い、最終回答する時はツールは使用せずに出力します。
         会話を続ける場合は得られた情報をベースに回答していきます。
         
+        大体はユーザーがいる場所を get_location ツールで取得し、その場所に関連する情報を get_map ツールで取得します。
+        そして、周辺施設を検索したり、さらにユーザーに質問するために ask_user ツールを使用します。
+        
         ホテルの一覧 = [
             "ホテルヨーロッパ",
             "ホテルアムステルダム",
@@ -109,13 +112,24 @@ class ChatAgent:
         tool = self._find_tool_from_name(tool_name)
         tool_result = tool.call(**arguments_dict)
 
-        self.messages.append(
-            {
-                "tool_call_id": tool_call_id,
-                "role": "tool",
-                "name": tool_name,
-                "content": tool_result,
-            }
-        )
+        if isinstance(tool_result, str):
+            self.messages.append(
+                {
+                    "tool_call_id": tool_call_id,
+                    "role": "tool",
+                    "name": tool_name,
+                    "content": tool_result,
+                }
+            )
+        else:
+            self.messages.append(
+                {
+                    "tool_call_id": tool_call_id,
+                    "role": "tool",
+                    "name": tool_name,
+                    "content": "ツール実行完了.画像情報の返答待ち",
+                }
+            )
+            self.messages.append({"role": "user", "content": tool_result})
 
         return self._chat()

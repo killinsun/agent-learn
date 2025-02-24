@@ -4,6 +4,8 @@ from agents.chat import ChatAgent
 from chat_history.conversation import LocalConversationHistory
 from search_engine.open_search import get_opensearch_client, FullTextSearchRetriever
 from tools.ask_user import AskUserTool
+from tools.location import LocationTool
+from tools.map import MapTool
 from tools.search_docs import SearchDocsTool
 from tools.user_defined import (
     get_available_tickets,
@@ -58,6 +60,8 @@ def chat():
                 retriever=fts_retriever,
             ),
             AskUserTool(),
+            MapTool(),
+            LocationTool(),
             get_available_tickets_tool,
             book_ticket_tool,
         ],
